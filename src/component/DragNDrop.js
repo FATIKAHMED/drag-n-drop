@@ -1,70 +1,79 @@
-import update from "immutability-helper";
-import { useCallback, useState } from "react";
-import { Form } from "./Form";
-import Drop from "./Drop";
-const style = {
-  width: 300,
-};
-const DragNDrop = () => {
-  {
-    const [cards, setCards] = useState([
-      {
-        id: 1,
-        text: "Write a cool JS library",
-      },
-      {
-        id: 2,
-        text: "Make it generic enough",
-      },
-      {
-        id: 3,
-        text: "Write README",
-      },
-      {
-        id: 4,
-        text: "Create some examples",
-      },
-      {
-        id: 5,
-        text: "Spam in Twitter and IRC to promote it (note that this element is taller than the others)",
-      },
-      {
-        id: 6,
-        text: "???",
-      },
-      {
-        id: 7,
-        text: "PROFIT",
-      },
-    ]);
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
-      setCards((prevCards) =>
-        update(prevCards, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, prevCards[dragIndex]],
-          ],
-        })
-      );
-    }, []);
-    const renderForm = useCallback((card, index) => {
-      return (
-        <Form
-          key={card.id}
-          index={index}
-          id={card.id}
-          text={card.text}
-          moveCard={moveCard}
-        />
-      );
-    }, []);
+import React, { useState } from "react";
+import { useDrop } from "react-dnd";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import arrayMove from "array-move";
+import "./file.css";
+import Form from "./Form";
 
-    return (
-      <>
-        <div style={style}>{cards.map((card, i) => renderForm(card, i))}</div>
-      </>
-    );
-  }
-};
+const FormList = [
+  {
+    id: 1,
+    label: "item 1",
+  },
+  {
+    id: 2,
+    label: "item 2",
+  },
+  {
+    id: 3,
+    label: "item 3",
+  },
+];
+
+const SortableForm = SortableElement(({ id, label }) => (
+  <Form id={id} key={id} label={label} />
+));
+
+const SortableFormList = SortableContainer(({ forms }) => {
+  return (
+    <div className="firstGrid">
+      {forms.map((form, index) => (
+        <SortableForm
+          key={form.id}
+          index={index}
+          id={form.id}
+          label={form.label}
+        />
+      ))}
+    </div>
+  );
+});
+
+function DragNDrop() {
+  const [board, setBoard] = useState([]);
+
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: "input",
+    drop: (item) => addFormToBoard(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
+  const addFormToBoard = (id) => {
+    const formList = FormList.filter((form) => id === form.id);
+    setBoard((board) => [...board, formList[0]]);
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setBoard((board) => arrayMove(board, oldIndex, newIndex));
+  };
+
+  return (
+    <>
+      <SortableFormList forms={FormList} onSortEnd={onSortEnd} useDragHandle />
+      <div className="secondGrid" ref={drop}>
+        {board.map((form) => (
+          <SortableForm
+            key={form.id}
+            index={form.id}
+            id={form.id}
+            label={form.label}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
 
 export default DragNDrop;

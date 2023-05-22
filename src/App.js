@@ -10,7 +10,7 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <div className="App">
         <DragNDrop />
-        <Drop />
+        {/* <Drop /> */}
       </div>
     </DndProvider>
   );
