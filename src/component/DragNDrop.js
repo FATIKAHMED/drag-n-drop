@@ -3,20 +3,92 @@ import update from "immutability-helper";
 import { useDrop } from "react-dnd";
 import "./file.css";
 import Form from "./Form";
+import HMobiledataSharpIcon from "@mui/icons-material/HMobiledataSharp";
+import AccountBoxSharpIcon from "@mui/icons-material/AccountBoxSharp";
+import EmailSharpIcon from "@mui/icons-material/EmailSharp";
+import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
+import LocalPhoneSharpIcon from "@mui/icons-material/LocalPhoneSharp";
+import EditCalendarSharpIcon from "@mui/icons-material/EditCalendarSharp";
+import EventSharpIcon from "@mui/icons-material/EventSharp";
+import BorderColorSharpIcon from "@mui/icons-material/BorderColorSharp";
+import SmartButtonSharpIcon from "@mui/icons-material/SmartButtonSharp";
+import RadioButtonCheckedSharpIcon from "@mui/icons-material/RadioButtonCheckedSharp";
+import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
+import CreateIcon from "@mui/icons-material/Create";
+import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const FormList = [
   {
-    id: 8,
-    label: "item 8",
+    id: 1,
+    label: "Heading",
+    icon: <HMobiledataSharpIcon />,
   },
-  // {
-  //   id: 9,
-  //   label: "item 9",
-  // },
-  // {
-  //   id: 10,
-  //   label: "item 10",
-  // },
+  {
+    id: 2,
+    label: "Full name",
+    icon: <AccountBoxSharpIcon />,
+  },
+  {
+    id: 3,
+    label: "Email",
+    icon: <EmailSharpIcon />,
+  },
+  {
+    id: 4,
+    label: "Address",
+    icon: <LocationOnSharpIcon />,
+  },
+  {
+    id: 5,
+    label: "Phone",
+    icon: <LocalPhoneSharpIcon />,
+  },
+  {
+    id: 6,
+    label: "Date Picker",
+    icon: <EditCalendarSharpIcon />,
+  },
+  {
+    id: 7,
+    label: "Appointment",
+    icon: <EventSharpIcon />,
+  },
+  {
+    id: 8,
+    label: "Signature",
+    icon: <BorderColorSharpIcon />,
+  },
+  {
+    id: 9,
+    label: "Button",
+    icon: <SmartButtonSharpIcon />,
+  },
+  {
+    id: 10,
+    label: " Radio button",
+    icon: <RadioButtonCheckedSharpIcon />,
+  },
+  {
+    id: 11,
+    label: "Check Box",
+    icon: <CheckBoxSharpIcon />,
+  },
+  {
+    id: 12,
+    label: "Text Feild",
+    icon: <CreateIcon />,
+  },
+  {
+    id: 13,
+    label: "Select Feild",
+    icon: <ChecklistRtlIcon />,
+  },
+  {
+    id: 14,
+    label: "Paragraph",
+    icon: <EditNoteIcon />,
+  },
 ];
 
 function DragNDrop() {
@@ -51,7 +123,14 @@ function DragNDrop() {
     <>
       <div className="firstGrid">
         {FormList.map((form) => {
-          return <Form id={form.id} key={form.id} label={form.label} />;
+          return (
+            <Form
+              id={form.id}
+              key={form.id}
+              label={form.label}
+              icon={form.icon}
+            />
+          );
         })}
       </div>
       <div className="secondGrid" ref={drop}>
@@ -61,6 +140,7 @@ function DragNDrop() {
               id={form.id}
               key={form.id}
               label={form.label}
+              icon={form.icon}
               // movecCard={moveCard}
             />
           );
