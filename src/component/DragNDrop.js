@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
 import update from "immutability-helper";
+import { useCallback, useState } from "react";
+import { Card } from "./sortable/Card";
 import { useDrop } from "react-dnd";
 import "./file.css";
 import Form from "./Form";
@@ -92,32 +93,52 @@ const FormList = [
 ];
 
 function DragNDrop() {
-  const [board, setBoard] = useState([]);
+  const [cards, setCards] = useState([]);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "input",
-    drop: (item) => addFormToBoard(item.id),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
+    drop: (item, monitor) => {
+      console.log(item);
+
+      setCards((prevCards) =>
+        update(prevCards, {
+          $splice: [[prevCards.length, 1, item]],
+        })
+      );
+    },
   }));
 
-  const addFormToBoard = (id) => {
-    console.log("DROPPED");
-    const formList = FormList.filter((form) => id === form.id);
-    setBoard((board) => [...board, formList[0]]);
-  };
-  // const moveCard = useCallback((dragIndex, hoverIndex, id) => {
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    setCards((prevCards) =>
+      update(prevCards, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, prevCards[dragIndex]],
+        ],
+      })
+    );
+  }, []);
+
+  // const addFormToBoard = (id) => {
+  //   console.log("DROPPED");
   //   const formList = FormList.filter((form) => id === form.id);
-  //   setBoard((form) =>
-  //     update(formList[0], {
-  //       $splice: [
-  //         [dragIndex, 1],
-  //         [hoverIndex, 0, formList[dragIndex]],
-  //       ],
-  //     })
-  //   );
-  // }, []);
+  //   setBoard((board) => [...board, formList[0]]);
+  // };
+
+  const renderCard = useCallback((card, index) => {
+    return (
+      <Card
+        key={card.id}
+        index={index}
+        id={card.id}
+        text={card.text}
+        moveCard={moveCard}
+        card={cards}
+      />
+    );
+  }, []);
+
+  console.log();
 
   return (
     <>
@@ -134,17 +155,7 @@ function DragNDrop() {
         })}
       </div>
       <div className="secondGrid" ref={drop}>
-        {board.map((form) => {
-          return (
-            <Form
-              id={form.id}
-              key={form.id}
-              label={form.label}
-              icon={form.icon}
-              // movecCard={moveCard}
-            />
-          );
-        })}
+        {cards.map((card, i) => renderCard(card, i))}
       </div>
     </>
   );

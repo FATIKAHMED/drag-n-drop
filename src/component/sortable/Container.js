@@ -44,14 +44,8 @@ export const Container = () => {
 
     const [{ isOver }, drop] = useDrop(() => ({
       accept: "input",
-      //   drop: (item, monitor) => console.log(item, monitor),
       drop: (item, monitor) => {
         console.log(item);
-        // console.log(cards);
-        // let updatedCards = cloneDeep(cards);
-        // updatedCards.push(item);
-        // console.log(updatedCards);
-        // setCards(updatedCards);
 
         setCards((prevCards) =>
           update(prevCards, {
@@ -59,10 +53,6 @@ export const Container = () => {
           })
         );
       },
-
-      //   collect: (monitor) => ({
-      //     isOver: !!monitor.isOver(),
-      //   }),
     }));
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {
@@ -90,9 +80,9 @@ export const Container = () => {
     }, []);
     return (
       <>
-        <div style={style} ref={drop}>
+        {/* <div style={style} ref={drop}>
           {cards.map((card, i) => renderCard(card, i))}
-        </div>
+        </div> */}
       </>
     );
   }

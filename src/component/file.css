@@ -15,8 +15,8 @@ img {
   margin: 5px;
 }
 .secondGrid {
-  width: 300px;
-  height: 500px;
+  width: 50rem;
+  height: 650px;
   border: 2px solid black;
   overflow-y: auto;
 }
