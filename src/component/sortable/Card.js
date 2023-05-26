@@ -154,14 +154,23 @@ export const Card = ({ id, text, index, moveCard, card }) => {
         " "
       )}
       {text == "Email" ? (
-        <TextField
-          ref={ref}
-          fullWidth
-          label="Email"
-          id="fullWidth"
-          data-handler-id={handlerId}
-          helperText="someone@example.com"
-        ></TextField>
+        <>
+          <Cover>
+            <Typography className="abc">
+              Email<span style={{ color: "red" }}>*</span>
+            </Typography>
+            <Box className="content">
+              <TextField
+                ref={ref}
+                fullWidth
+                label="Email"
+                id="fullWidth"
+                data-handler-id={handlerId}
+                helperText="someone@example.com"
+              ></TextField>
+            </Box>
+          </Cover>
+        </>
       ) : (
         " "
       )}
