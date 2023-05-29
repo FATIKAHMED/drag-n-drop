@@ -67,7 +67,7 @@ const FormList = [
   },
   {
     id: 10,
-    label: " Radio button",
+    label: "Radio button",
     icon: <RadioButtonCheckedSharpIcon />,
   },
   {
