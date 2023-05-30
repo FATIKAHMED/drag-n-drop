@@ -13,14 +13,48 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import BasicDatePicker from "./BasicDatePicker";
+import { TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
+const HeadingCover = styled("div")(({ theme }) => ({
+  backgroundColor: "black",
+  textAlign: "center",
+  paddingTop: "2rem",
+  margin: "2rem",
+  border: "2px dashed #0047AB",
+  borderRadius: "10px",
+  ".headerHeading": {
+    color: "white",
+    fontSize: "2rem",
+    fontWeight: "700",
+    paddingBottom: "1rem",
+  },
+  ".headersubHeading": {
+    color: "white",
+    fontSize: "1rem",
+    fontWeight: "400",
+    paddingBottom: "3.5rem",
+  },
+  ".headingContent": {
+    paddingLeft: "3rem",
+    paddingRight: "3rem",
+  },
+  ".heading": {
+    paddingBottom: "2rem",
+    color: "white",
+  },
+}));
 
 const Cover = styled("div")(({ theme }) => ({
   textAlign: "center",
   paddingTop: "2rem",
-
   margin: "2rem",
   border: "1px solid #5A5A5A ",
   borderRadius: "10px",
+  boxShadow:
+    "0 6px 10px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
   ".content": { paddingLeft: "3rem", paddingRight: "3rem" },
   ".abc": {
     fontSize: "1.5rem",
@@ -74,6 +108,20 @@ const LinkBox = styled("div")(({ theme }) => ({
   color: "white",
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
+  paddingLeft: "2rem",
+  paddingRight: "2rem",
+}));
+
+const LinkBoxHeading = styled("div")(({ theme }) => ({
+  height: "3.5rem",
+  backgroundColor: "red",
+  outline: "none",
+  borderRadius: "0px 0px 10px 10px",
+  borderColor: "red",
+  color: "white",
+  display: "flex",
+  justifyContent: "center",
   alignItems: "center",
   paddingLeft: "2rem",
   paddingRight: "2rem",
@@ -149,13 +197,38 @@ export const Card = ({ id, text, index, moveCard, card }) => {
   return (
     <>
       {text == "Heading" ? (
-        <TextField
-          ref={ref}
-          fullWidth
-          label="Heading"
-          id="fullWidth"
-          data-handler-id={handlerId}
-        ></TextField>
+        <>
+          <HeadingCover ref={ref}>
+            <Box className="headingContent">
+              <Typography className="headerHeading">
+                Diamond Daily Check-In
+              </Typography>
+              <Typography className="headersubHeading">
+                Fill this out first thing in the morning.
+              </Typography>
+              {/* <TextField
+                // color="white"
+                className="heading"
+                fullWidth
+                id="standard-multiline-flexible"
+                placeholder="Heading Here"
+                multiline
+                variant="standard"
+              />
+              <TextField
+                className="heading"
+                fullWidth
+                id="standard-multiline-flexible"
+                placeholder="Subheading Here"
+                multiline
+                variant="standard"
+              /> */}
+            </Box>
+            <LinkBoxHeading>
+              <Button sx={{ color: "white" }}>NEXT &rarr;</Button>
+            </LinkBoxHeading>
+          </HeadingCover>
+        </>
       ) : (
         " "
       )}
@@ -299,9 +372,61 @@ export const Card = ({ id, text, index, moveCard, card }) => {
       {text == "Date Picker" ? (
         <>
           <Cover ref={ref}>
-            <Typography className="abc">Date</Typography>
-
-            <Box className="content"></Box>
+            <Typography className="abc">
+              Date<span style={{ color: "red" }}>*</span>
+            </Typography>
+            <Box className="content">
+              <TextField
+                className="button"
+                fullWidth
+                id="standard-multiline-flexible"
+                placeholder="Type a description"
+                multiline
+                variant="standard"
+              />
+              <BasicDatePicker />
+            </Box>
+            <LinkBox>
+              <Button sx={{ color: "white" }}>&larr; PREVIOUS</Button>
+              <Button sx={{ color: "white" }}>NEXT &rarr;</Button>
+            </LinkBox>
+          </Cover>
+        </>
+      ) : (
+        ""
+      )}
+      {text == "Time Picker" ? (
+        <>
+          <Cover ref={ref}>
+            <Box className="content">
+              <TextField
+                className="button"
+                fullWidth
+                id="standard-multiline-flexible"
+                placeholder="Type Question Here"
+                multiline
+                variant="standard"
+              />
+              <TextField
+                className="button"
+                fullWidth
+                id="standard-multiline-flexible"
+                placeholder="Type a description"
+                multiline
+                variant="standard"
+              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker
+                  sx={{ width: "100%", paddingBottom: "2rem" }}
+                  label="HH/MM (AM/PM)"
+                  slotProps={{
+                    textField: {
+                      helperText: "Time",
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </Box>
             <LinkBox>
               <Button sx={{ color: "white" }}>&larr; PREVIOUS</Button>
               <Button sx={{ color: "white" }}>NEXT &rarr;</Button>
@@ -319,7 +444,7 @@ export const Card = ({ id, text, index, moveCard, card }) => {
                 className="button"
                 fullWidth
                 id="standard-multiline-flexible"
-                placeholder="Enter Text Here"
+                placeholder="Type Question Here"
                 multiline
                 variant="standard"
               />
@@ -349,7 +474,7 @@ export const Card = ({ id, text, index, moveCard, card }) => {
                 className="button"
                 fullWidth
                 id="standard-multiline-flexible"
-                placeholder="Enter Text Here"
+                placeholder="Type Question Here"
                 multiline
                 variant="standard"
               />
@@ -465,7 +590,7 @@ export const Card = ({ id, text, index, moveCard, card }) => {
                 className="button"
                 fullWidth
                 id="standard-multiline-flexible"
-                placeholder="Enter Text Here"
+                placeholder="Type Question Here"
                 multiline
                 variant="standard"
               />

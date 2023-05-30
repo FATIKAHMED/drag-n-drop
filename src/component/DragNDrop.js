@@ -10,8 +10,7 @@ import EmailSharpIcon from "@mui/icons-material/EmailSharp";
 import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
 import LocalPhoneSharpIcon from "@mui/icons-material/LocalPhoneSharp";
 import EditCalendarSharpIcon from "@mui/icons-material/EditCalendarSharp";
-import EventSharpIcon from "@mui/icons-material/EventSharp";
-import BorderColorSharpIcon from "@mui/icons-material/BorderColorSharp";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SmartButtonSharpIcon from "@mui/icons-material/SmartButtonSharp";
 import RadioButtonCheckedSharpIcon from "@mui/icons-material/RadioButtonCheckedSharp";
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
@@ -52,41 +51,36 @@ const FormList = [
   },
   {
     id: 7,
-    label: "Appointment",
-    icon: <EventSharpIcon />,
+    label: "Time Picker",
+    icon: <AccessTimeIcon />,
   },
   {
     id: 8,
-    label: "Signature",
-    icon: <BorderColorSharpIcon />,
-  },
-  {
-    id: 9,
     label: "Button",
     icon: <SmartButtonSharpIcon />,
   },
   {
-    id: 10,
+    id: 9,
     label: "Radio button",
     icon: <RadioButtonCheckedSharpIcon />,
   },
   {
-    id: 11,
+    id: 10,
     label: "Check Box",
     icon: <CheckBoxSharpIcon />,
   },
   {
-    id: 12,
+    id: 11,
     label: "Text Feild",
     icon: <CreateIcon />,
   },
   {
-    id: 13,
+    id: 12,
     label: "Select Feild",
     icon: <ChecklistRtlIcon />,
   },
   {
-    id: 14,
+    id: 13,
     label: "Paragraph",
     icon: <EditNoteIcon />,
   },
@@ -118,12 +112,6 @@ function DragNDrop() {
       })
     );
   }, []);
-
-  // const addFormToBoard = (id) => {
-  //   console.log("DROPPED");
-  //   const formList = FormList.filter((form) => id === form.id);
-  //   setBoard((board) => [...board, formList[0]]);
-  // };
 
   const renderCard = useCallback((card, index) => {
     return (
